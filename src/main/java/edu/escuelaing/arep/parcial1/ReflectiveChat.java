@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.URI;
 import java.util.Arrays;
 
+
 public class ReflectiveChat {
 
     private static int PORT = 30001;
@@ -69,6 +70,13 @@ public class ReflectiveChat {
         else if(function.equals("binaryinvoke")){
             result = binaryInvoke(values);
         }
+        StringBuilder response = new StringBuilder();
+        response.append("HTTP/1.1 200 OK\r\n");
+        response.append("Content-Type: application/json\r\n");
+        response.append("\r\n");
+        response.append(result);
+        out.println(response.toString());
+        out.flush();
         
         
     }
@@ -80,18 +88,55 @@ public class ReflectiveChat {
         Field[] fields = c.getDeclaredFields();
         Method[] methods = c.getDeclaredMethods();
         response.append("{\"fields\":"+ "\""+Arrays.toString(fields) + "\"" + ",");
-        response.append("{\"methods\""+"\"" +Arrays.toString(methods) + "\"" +"}");
+        response.append("\"methods\":"+"\"" +Arrays.toString(methods) + "\"" +"}");
         System.out.println(response.toString());
 
         return response.toString();
     }
 
-    public static String invoke(String[] parameters){
-        return "";
+    public static String invoke(String[] parameters) throws Exception{
+        String className = parameters[0];
+        String methodName = parameters[1];
+        Class<?> c = Class.forName(className);
+        StringBuilder response = new StringBuilder();
+    
+        Method m = c.getDeclaredMethod(methodName);
+        Object result = m.invoke(null);
+        response.append("{\"result\":"+ "\"" + result.toString() + "\"" + "}");
+        System.out.println(response.toString());
+        return response.toString();
     }
 
-    public static String unaryInvoke(String[] parameters){
-        return "";
+    public static String unaryInvoke(String[] parameters) throws Exception{
+        String className = parameters[0];
+        String methodName = parameters[1];
+        String paramType = parameters[2];
+        String param = parameters[3];
+
+        
+        Class<?> c = Class.forName(className);
+        Class<?> paramC = null;
+        Object arg = null;
+        if(paramType.equals("int")){
+            paramC = int.class;
+            arg = Integer.parseInt(param);
+        }
+        if(paramType.equals("String")) {
+            paramC = String.class;
+            arg = param;
+        }
+        if(paramType.equals("double")) {
+            paramC = double.class;
+            arg = Double.parseDouble(param);
+        }
+        
+        Method m = c.getDeclaredMethod(methodName, paramC);
+        Object result = m.invoke(null, arg);
+
+        StringBuilder response = new StringBuilder();
+        response.append("{\"result\":"+ "\"" + result.toString() +"\"" + "}");
+
+        return response.toString();
     }
 
     public static String binaryInvoke(String[] parameters){

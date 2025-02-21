@@ -15,6 +15,7 @@ public class Facade {
 
     public static void main(String[] args) throws Exception {
         Facade.start();
+        
     }
 
     public static void start() throws Exception {
@@ -55,7 +56,7 @@ public class Facade {
         response.append("HTTP/1.1 200 OK\r\n");
         response.append("Content-Type: application/json\r\n");
         response.append("\r\n");
-        response.append(response);
+        response.append(chatResponse);
         out.println(response.toString());
         out.flush();
     }
@@ -85,7 +86,7 @@ public class Facade {
                         "                let response = await fetch (`${url}${method}`, {method: 'POST'});\r\n" + //
                         "                let obj = await response.json();\r\n" + //
                         "                console.log(obj);\r\n" + //
-                        "                document.getElementById(\"getrespmsg\").innerHTML = obj.result;\r\n" + //
+                        "                document.getElementById(\"getrespmsg\").innerHTML = obj;\r\n" + //
                         "            }\r\n" + //
                         "        </script>\r\n" + //
                         "    </body>\r\n" + //

@@ -32,7 +32,8 @@ public class HttpResponse {
             in.close();
             result = response.toString();
             // print result
-            System.out.println(response.toString());
+            System.out.println("respuesta reflexiv chat: "+response.toString());
+            System.out.println();
         }
         return result;
     }
