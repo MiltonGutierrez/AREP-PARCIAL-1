@@ -79,15 +79,15 @@ public class Facade {
                         "            <input type=\"text\" id=\"function\"><br><br>\r\n" + //
                         "            <input type=\"button\" value=\"Submit\" onclick=\"chat(document.getElementById('function').value)\">\r\n" + //
                         "        </form> \r\n" + //
-                        "        <div id=\"getrespmsg\"></div>\r\n" + //
+                        "        <div id=\"postrespmsg\"></div>\r\n" + //
                         "        <script>\r\n" + //
                         "            async function chat(method) {\r\n" + //
                         "                let url = \"http://localhost:30000/consulta?comando=\";\r\n" + //
-                        "                let response = await fetch (`${url}${method}`, {method: 'POST'});\r\n" + //
-                        "                let obj = await response.json();\r\n" + //
-                        "                console.log(obj);\r\n" + //
-                        "                document.getElementById(\"getrespmsg\").innerHTML = obj;\r\n" + //
+                        "                fetch (`${url}${method}`, {method: 'POST'})\r\n" + //
+                        "                    .then(x => x.text())\r\n" + //
+                        "                    .then(y => document.getElementById(\"postrespmsg\").innerHTML = y);\r\n" + //
                         "            }\r\n" + //
+                        "            \r\n" + //
                         "        </script>\r\n" + //
                         "    </body>\r\n" + //
                         "</html>");

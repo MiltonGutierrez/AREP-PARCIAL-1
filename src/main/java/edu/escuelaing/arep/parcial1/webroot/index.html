@@ -15,11 +15,11 @@
         <script>
             async function chat(method) {
                 let url = "http://localhost:30000/consulta?comando=";
-                let response = await fetch (`${url}${method}`, {method: 'POST'});
-                let obj = await response.json();
-                console.log(obj);
-                document.getElementById("getrespmsg").innerHTML = obj.result;
+                fetch (`${url}${method}`, {method: 'POST'})
+                    .then(x => x.text())
+                    .then(y => document.getElementById("postrespmsg").innerHTML = y);
             }
+            
         </script>
     </body>
 </html>
