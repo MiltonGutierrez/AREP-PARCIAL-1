@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
 
+import static edu.escuelaing.arep.parcial1.HttpResponse.getRespoonse;
+
 public class Facade {
     private static int PORT = 30000;
     private static boolean RUNNING = true;
@@ -38,10 +40,24 @@ public class Facade {
 
         if (uir.getPath().startsWith("/cliente")) {
             getPage(out);
-        } else if (uir.getPath().startsWith("/cliente")) {
-
+        } else if (uir.getPath().startsWith("/consulta")) {
+            handleChatRequest(out, uir);
         }
+        in.close();
+        out.close();
+        client.close();
 
+    }
+
+    private static void handleChatRequest(PrintWriter out, URI resource) throws Exception{
+        String chatResponse = getRespoonse("compreflex?"+resource.getQuery());
+        StringBuilder response = new StringBuilder();
+        response.append("HTTP/1.1 200 OK\r\n");
+        response.append("Content-Type: application/json\r\n");
+        response.append("\r\n");
+        response.append(response);
+        out.println(response.toString());
+        out.flush();
     }
 
     public static void getPage(PrintWriter out) {

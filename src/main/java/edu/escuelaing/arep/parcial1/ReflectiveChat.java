@@ -9,7 +9,7 @@ import java.net.URI;
 
 public class ReflectiveChat {
 
-    private static int PORT = 30000;
+    private static int PORT = 30001;
     private static boolean RUNNING = true;
 
     public static void main(String[] args) throws Exception {
@@ -34,10 +34,20 @@ public class ReflectiveChat {
         String readline = in.readLine();
 
         String request = readline.split(" ")[1];
-        URI uir = new URI(request);
+        URI uri = new URI(request);
         System.out.println("REQUEST " + request);
 
-        
+        if(uri.getPath().startsWith("/compreflex")){
+            handleChatRequest(out, uri);
+        }
+        in.close();
+        out.close();
+        client.close();
+    }
+
+    private static void handleChatRequest(PrintWriter out, URI resource)throws Exception{
+        String fullFunction = resource.getQuery().split("=")[1];
+        System.out.println("FULL FUNCTION " + fullFunction);
     }
 
 }
