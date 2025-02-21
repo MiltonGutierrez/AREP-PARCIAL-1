@@ -40,7 +40,6 @@ Ingrese al browser la siguiente direccion: *http://localhost:30000/cliente*
 4. binaryInvoke([class name],[method name],[paramtype 1],[param value], [paramtype 1],[param value],): retorna el resultado de la invocación del método. paramtype = int | double | String. 
 **Ejemplos:**
 - binaryInvoke(java.lang.Math,max,double,4.5,double,-3.7)
-- binaryInvoke(java.lang.Math,addExact,int,6,int,-3)
 4. El chat solo soporta invocación de métodos estáticos.
 
 
