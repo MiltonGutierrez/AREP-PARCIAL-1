@@ -24,8 +24,9 @@ public class ReflectiveChat {
     public static void start() throws Exception {
         ServerSocket server = new ServerSocket(PORT);
         while (RUNNING) {
+            System.out.println("REFLEXCHAT RUNNING");
             Socket client = server.accept();
-            System.out.println("FACADE RUNNING");
+            
             if (client != null) {
                 handleRequest(client);
             }

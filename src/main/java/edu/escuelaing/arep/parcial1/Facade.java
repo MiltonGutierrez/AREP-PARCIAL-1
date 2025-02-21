@@ -21,8 +21,9 @@ public class Facade {
     public static void start() throws Exception {
         ServerSocket server = new ServerSocket(PORT);
         while (RUNNING) {
-            Socket client = server.accept();
             System.out.println("FACADE RUNNING");
+            Socket client = server.accept();
+            
             if (client != null) {
                 handleRequest(client);
             }

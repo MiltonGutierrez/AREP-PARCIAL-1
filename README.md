@@ -26,20 +26,21 @@ Ingrese al browser la siguiente direccion: *http://localhost:30000/cliente*
 
 - No dejar espacios al momento de ingresar los parametros.
 - Validar el sintax de cada función, recuerde que las funciones validas son las siguientes:
+- No usar parametros entre comillas por ejemplo "3" en lugar deje el 3.
 
 **Los comandos que soporta el chat son los siguientes:**
 1. Class([class name]): Retorna una lista de campos declarados y métodos declarados.
 **Ejemplo:** class(java.lang.Math)
 2. invoke([class name],[method name]): retorna el resultado de la invocación del método.  
-**Ejemplo:** invoke(java.lang.System,getenv).
+**Ejemplo:** invoke(java.lang.System,getenv)
 3. unaryInvoke([class name],[method name],[paramtype],[param value]): retorna el resultado de la invocación del método. paramtype = int | double | String.
 **Ejemplos:**
 - unaryInvoke(java.lang.Math,abs,int,3)
-- unaryInvoke(java.lang.Integer,valueOf,String,"3")
+- unaryInvoke(java.lang.Integer,valueOf,String,3)
 4. binaryInvoke([class name],[method name],[paramtype 1],[param value], [paramtype 1],[param value],): retorna el resultado de la invocación del método. paramtype = int | double | String. 
 **Ejemplos:**
 - binaryInvoke(java.lang.Math,max,double,4.5,double,-3.7)
-- binaryInvoke(java.lang.Integer,add,int,6,int,-3)
+- binaryInvoke(java.lang.Math,addExact,int,6,int,-3)
 4. El chat solo soporta invocación de métodos estáticos.
 
 
