@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
+import java.rmi.server.ExportException;
 import java.util.Arrays;
 
 
@@ -129,9 +130,63 @@ public class ReflectiveChat {
             paramC = double.class;
             arg = Double.parseDouble(param);
         }
-        
         Method m = c.getDeclaredMethod(methodName, paramC);
         Object result = m.invoke(null, arg);
+        StringBuilder response = new StringBuilder();
+        response.append("{\"result\":"+ "\"" + result.toString() +"\"" + "}");
+
+        return response.toString();
+    }
+
+    public static String binaryInvoke(String[] parameters) throws Exception{
+        String className = parameters[0];
+        String methodName = parameters[1];
+        String paramType = parameters[2];
+        String param = parameters[3];
+        String secondParamType = parameters[4];
+        String secondParam = parameters[5];
+
+
+        
+        Class<?> c = Class.forName(className);
+        Class<?> paramC = null;
+        Object arg = null;
+        if(paramType.equals("int")){
+            paramC = int.class;
+            arg = Integer.parseInt(param);
+        }
+        if(paramType.equals("String")) {
+            paramC = String.class;
+            arg = param;
+        }
+        if(paramType.equals("double")) {
+            paramC = double.class;
+            arg = Double.parseDouble(param);
+        }
+
+        Class<?> paramCSecond = null;
+        Object secondArg = null;
+        if(secondParamType.equals("int")){
+            paramCSecond = int.class;
+            secondArg = Integer.parseInt(param);
+        }
+        if(secondParamType.equals("String")) {
+            paramCSecond= String.class;
+            secondArg = param;
+        }
+        if(secondParamType.equals("double")) {
+            paramCSecond = double.class;
+            secondArg = Double.parseDouble(param);
+        }
+        //NO ME DEJO MANDAR LOS IF A UN METODO GENERAL, POR ALGUNA RAZON NO MANTENIA LA ASIGNACION
+        
+        returnTypesAndParams(paramType, param, paramC, arg);
+        returnTypesAndParams(secondParamType, secondParam, paramCSecond, secondArg);
+        Class<?>[] paramTypes = new Class[]{paramC,paramCSecond};
+        Object[] args = new Object[]{arg, secondArg};
+ 
+        Method m = c.getDeclaredMethod(methodName, paramTypes);
+        Object result = m.invoke(null, args);
 
         StringBuilder response = new StringBuilder();
         response.append("{\"result\":"+ "\"" + result.toString() +"\"" + "}");
@@ -139,8 +194,19 @@ public class ReflectiveChat {
         return response.toString();
     }
 
-    public static String binaryInvoke(String[] parameters){
-        return "";
+    private static void returnTypesAndParams(String paramType, String param, Class<?> paramC, Object arg){
+        if(paramType.equals("int")){
+            paramC = int.class;
+            arg = Integer.parseInt(param);
+        }
+        if(paramType.equals("String")) {
+            paramC = String.class;
+            arg = param;
+        }
+        if(paramType.equals("double")) {
+            paramC = double.class;
+            arg = Double.parseDouble(param);
+        }
     }
 
 }
