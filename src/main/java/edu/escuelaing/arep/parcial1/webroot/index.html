@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CHAT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>REFLEXIVE CHAT</h1>
+        <form action>
+            <input type="text" id="function"><br><br>
+            <input type="button" value="Submit" onclick="chat(document.getElementById('function').value)">
+        </form> 
+        <div id="getrespmsg"></div>
+        <script>
+            async function chat(method) {
+                let url = "http://localhost:30000/consulta?comando=";
+                let response = await fetch (`${url}${method}`, {method: 'POST'});
+                let obj = await response.json();
+                console.log(obj);
+                document.getElementById("getrespmsg").innerHTML = obj.result;
+            }
+        </script>
+    </body>
+</html>
